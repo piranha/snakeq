@@ -13,10 +13,11 @@
             [lein-figwheel "0.1.3-SNAPSHOT"]]
 
   :cljsbuild {
-              :builds [{ :source-paths ["src"]
-                         :compiler { :output-to "resources/public/js/compiled/snake.js"
-                                     :output-dir "resources/public/js/compiled/out"
-                                     :optimizations :none }}]}
+              :builds [{:source-paths ["src"]
+                        :compiler {:output-to "resources/public/js/compiled/snake.js"
+                                   :output-dir "resources/public/js/compiled/out"
+                                   :optimizations :none
+                                   :source-map true}}]}
   :figwheel {
              :http-server-root "public" ;; default and assumes "resources" 
              :server-port 3449 ;; default
