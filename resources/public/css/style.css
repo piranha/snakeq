@@ -1,0 +1,5 @@
+table {border: 1px solid grey; border-collapse: collapse;}
+td { width: 20px; height: 20px; padding: 0;}
+td.snake { background-color: green; }
+td.fruit { background-color: red; }
+
