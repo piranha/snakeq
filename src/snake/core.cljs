@@ -38,9 +38,8 @@
   (fn [_ _ _ data]
     (request-render data)))
 
-(fw/watch-and-reload
- :jsload-callback (fn []
-                    (swap! world assoc :tmp-dev (not (:tmp-dev @world)))))
+(fw/watch-and-reload :jsload-callback
+  (fn [] (swap! world update-in [:tmp-dev] not)))
 
 ;; logic
 
