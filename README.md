@@ -1,4 +1,4 @@
-# Snake
+# Qsnake
 
 That's a basic "Snake" game written in ClojureScript. To run install
 [Leiningen](http://leiningen.org/#install) and then run `make`.
