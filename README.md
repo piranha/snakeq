@@ -14,5 +14,5 @@ There is also advanced compilation configured, so you can do `make www` and it
 will put optimized version inside of `www` directory (be patient, it can take
 half a minute depending on your machine).
 
-There is also [an article](http://solovyov.net/en/2014/cljs-start/), describing
+There is also [an article](http://solovyov.net/en/2014/cljs-start/) describing
 whole setup.
