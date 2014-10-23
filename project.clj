@@ -18,13 +18,13 @@
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src" "dev-src"]
-              :compiler {:output-to "resources/public/js/compiled/snake.js"
-                         :output-dir "resources/public/js/compiled/out"
+              :compiler {:output-to "resources/public/js/qsnake.js"
+                         :output-dir "resources/public/js/out"
                          :optimizations :none
                          :source-map true}}
              {:id "www"
               :source-paths ["src"]
-              :compiler {:output-to "www/qsnake.js"
+              :compiler {:output-to "www/qsnake.min.js"
                          :optimizations :advanced
                          :pretty-print false
                          :preamble ["react/react.min.js"]
