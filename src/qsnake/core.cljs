@@ -1,8 +1,7 @@
-(ns snake.core
-  (:require [figwheel.client :as fw]
-            [sablono.core :as html :refer-macros [html]]
-            [quiescent :as q :include-macros true]
-            [clojure.string :as str]))
+(ns qsnake.core
+  (:require [clojure.string :as str]
+            [sablono.core :refer-macros [html]]
+            [quiescent :as q :include-macros true]))
 
 (declare Root)
 
@@ -10,9 +9,10 @@
   (rand-int (* size size)))
 
 (defn cx [& {:as classes}]
-  (str/join " " (for [[k v] classes
-                      :when v]
-                  (name k))))
+  (str/join " "
+    (for [[k v] classes
+          :when v]
+      (name k))))
 
 ;; data
 (def size 15)
@@ -26,20 +26,19 @@
 (defn restart []
   (reset! world init-state))
 
+;; render
+
 (let [render-pending? (atom false)]
   (defn request-render [data]
     (when (compare-and-set! render-pending? false true)
       (.requestAnimationFrame js/window
         (fn []
-          (q/render (Root data) (.getElementById js/document "main-area"))
+          (q/render (Root data) (.getElementById js/document "main"))
           (reset! render-pending? false))))))
 
 (add-watch world ::render
   (fn [_ _ _ data]
     (request-render data)))
-
-(fw/watch-and-reload :jsload-callback
-  (fn [] (swap! world update-in [:tmp-dev] not)))
 
 ;; logic
 
@@ -85,18 +84,6 @@
 (def KEYS
   {37 :left 38 :up 39 :right 40 :down})
 
-(defn start
-  []
-  (request-render @world)
-  (.addEventListener js/window "keydown"
-    (fn [e]
-      (if-let [key (KEYS (aget e "keyCode"))]
-        (swap! world #(assoc % :dir key)))))
-  (js/setInterval
-    (fn []
-      (swap! world next-tick))
-    200))
-
 ;; html
 
 (q/defcomponent Board
@@ -122,5 +109,18 @@
      (Board data)
      [:div {:style {:font-size "2em"}} (pr-str data)]]))
 
+
+;; go
+
+(defn start
+  []
+  (request-render @world)
+  (.addEventListener js/window "keydown"
+    (fn [e]
+      (if-let [key (KEYS (aget e "keyCode"))]
+        (swap! world #(assoc % :dir key)))))
+  (js/setInterval
+    #(swap! world next-tick)
+    200))
 
 (defonce app (start))
